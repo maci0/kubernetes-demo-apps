@@ -51,13 +51,13 @@ spec:
               name: newrelic-bundle-newrelic-infrastructure-config
               key: license
         - name: NEW_RELIC_APP_NAME
-          value: K8s guestbook - frontend
+          value: Workshop-Frontend
           # tells the node.js app to pause at random intervals
         - name: LOOK_BUSY
-          value: f
+          value: t
           # tells the node.js app to throw synthetic errors
         - name: THROW_ERROR
-          value: f
+          value: t
         - name: GET_HOSTS_FROM
           value: dns
           # If your cluster config does not include a dns service, then to
