@@ -43,7 +43,7 @@ spec:
            port: 3000
          initialDelaySeconds: 30
          periodSeconds: 5
-         failureThreshold: 1 # For demo purposes
+         failureThreshold: 3 # For demo purposes
         env:
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
@@ -54,10 +54,10 @@ spec:
           value: Workshop-Frontend
           # tells the node.js app to pause at random intervals
         - name: LOOK_BUSY
-          value: t
+          value: f
           # tells the node.js app to throw synthetic errors
         - name: THROW_ERROR
-          value: t
+          value: f
         - name: GET_HOSTS_FROM
           value: dns
           # If your cluster config does not include a dns service, then to

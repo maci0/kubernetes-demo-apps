@@ -3,12 +3,19 @@ kind: Service
 metadata:
   name: rabbitmq
   labels:
-    app: rabbitmq
+    #app: rabbitmq
     tier: queue
 spec:
   ports:
   - port: 5672
     targetPort: 5672
+    name: rabbitmq
+  - port: 15672
+    targetPort: 15672
+    name: rabbitmqmgmt
+  - port: 15692
+    targetPort: 15692
+    name: rabbitmqprom
   selector:
     app: guestbook
     tier: queue
@@ -29,14 +36,26 @@ spec:
   template:
     metadata:
       labels:
+        component: rabbitmq
         app: guestbook
         tier: queue
     spec:
       containers:
       - name: queue
-        image: docker.io/spolfliet/newrelic-k8s-guestbook-rabbitmq:latest
+        image: rabbitmq:3-management
+        #image: docker.io/spolfliet/newrelic-k8s-guestbook-rabbitmq:latest
+        env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: user
+        - name: RABBITMQ_DEFAULT_PASS
+          value: bitnami
         ports:
         - containerPort: 5672
+          name: rabbitmq
+        - containerPort: 15672
+          name: rabbitmqmgmt
+        - containerPort: 15692
+          name: rabbitmqprom
         # resources:
         #  requests:
         #      cpu: 50m
