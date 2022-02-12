@@ -123,7 +123,7 @@ var listenToQueue = function() {
         return ch.consume(q, function(msg) {
           lookBusy();
           var message = msg.content.toString();
-          
+
           pushToRedis(message);
 
           notifyThirdParty();
