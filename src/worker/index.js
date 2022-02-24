@@ -61,35 +61,35 @@ var pushToRedis = function(message) {
 // Request to 3rd-party
 async function notifyThirdParty() {
   try {
-    await notifyRandomOrg();
+    await notifyCatFacts();
   } catch (error) {
     logger.error(error);
   }
 }
 
-function notifyRandomOrg() {
+function notifyCatFacts() {
   return new Promise((resolve, reject) => {
     // Fail 1 out of 10 requests
     var failRate = 10;
     var fail = Math.floor(Math.random() * failRate) === 1;
     const options = {
-      host: 'www.random.org',
+      host: 'catfact.ninja',
       port: 443,
-      path: '/integers/?' + querystring.escape('num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'),
+      path: '/fact?' + querystring.escape('max_length=128'),
       method: 'GET'
     };
 
     if (fail) {
-      options.path = '/floats/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new';
+      options.path = '/fact?max_length=128';
       logger.info('Contacting 3rd-party... ' + options.host + options.path);
-      newrelic.noticeError('HTTP error ' + options.host + options.path);
+      newrelic.noticeError('HTTP error when contacting https://' + options.host + options.path);
     } else {
       logger.info('Contacting 3rd-party... ' + options.host + options.path);
     }
 
     const request = https.request(options, (res) => {
       res.on('data', (d) => {
-        // Ignore the data
+        logger.info('Cat Fact: ' + d)
       })
       res.on('end', function() {
         if (res.statusCode >= 300) {
@@ -97,7 +97,7 @@ function notifyRandomOrg() {
           logger.error('Error third-party, code: ' + res.statusCode);
           reject('Error third-party, code: ' + res.statusCode);
         } else {
-          logger.info('Third-party request successfull, code: ' + res.statusCode);
+          logger.info('Third-party request successful, code: ' + res.statusCode);
           resolve();
         }
       });

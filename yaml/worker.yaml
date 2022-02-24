@@ -34,19 +34,21 @@ spec:
     spec:
       containers:
       - name: worker
-        image: ghcr.io/kidk/kubernetes-demo-apps-worker:latest
+        #image: ghcr.io/kidk/kubernetes-demo-apps-worker:latest
+        image: public.ecr.aws/z5b4c1b6/kubernetes-demo-apps-worker:0.1
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 50m
             memory: 100Mi
           limits:
-            cpu: 200m
-            memory: 300Mi
+            cpu: 150m
+            memory: 200Mi
         env:
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
-              name: newrelic-bundle-newrelic-infrastructure-config
+              name: newrelic-license-key
               key: license
         - name: NEW_RELIC_APP_NAME
           value: Workshop-Worker
