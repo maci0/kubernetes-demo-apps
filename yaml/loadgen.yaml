@@ -6,6 +6,9 @@ metadata:
     app: loadgen
 spec:
   containers:
-  - image: ghcr.io/kidk/kubernetes-demo-apps-loadgen:latest
+  - image: bschmitt769/kubernetes-demo-apps-loadgen:0.2
     name: loadgen
+    command:
+      - ./loadgen.sh
+      - 8081
   restartPolicy: Always
