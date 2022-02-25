@@ -43,7 +43,7 @@ spec:
         livenessProbe:
          httpGet:
            path: /healthz
-           port: 3000
+           port: 3001
          initialDelaySeconds: 30
          periodSeconds: 5
          failureThreshold: 3 # For demo purposes
