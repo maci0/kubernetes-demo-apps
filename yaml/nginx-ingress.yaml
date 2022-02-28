@@ -8,10 +8,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: example.com
+  - host: sko-workshop.com
     http:
       paths:
-        - path: /test123
+        - path: /
           pathType: Prefix
           backend:
             service:
