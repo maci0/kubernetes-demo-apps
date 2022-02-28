@@ -11,10 +11,10 @@ spec:
   - host: my.test.host
     http:
       paths:
-        - path: /
+        - path: /test123
           pathType: Prefix
           backend:
             service:
               name: frontend
               port:
-                number: 8081
+                number: 8888
