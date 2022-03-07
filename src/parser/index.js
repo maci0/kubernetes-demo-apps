@@ -76,7 +76,8 @@ app.use(function(req, res, next) {
 });
 
 app.get('/healthz', function (req, res) {
-  newrelic.setIgnoreTransaction(true);
+  const transactionHandle = newrelic.getTransaction();
+  transactionHandle.ignore();
   res.status(200).send('OK');
 });
 
