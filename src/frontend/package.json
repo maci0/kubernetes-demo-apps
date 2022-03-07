@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@newrelic/winston-enricher": "^0.1.1",
+    "@newrelic/winston-enricher": "^2.1.0",
     "body-parser": "^1.18.3",
     "express": "^4.17.3",
     "express-winston": "^4.2.0",

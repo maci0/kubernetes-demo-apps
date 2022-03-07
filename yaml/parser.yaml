@@ -34,7 +34,8 @@ spec:
     spec:
       containers:
       - name: parser
-        image: ghcr.io/kidk/kubernetes-demo-apps-parser:latest
+        image: bschmitt769/kubernetes-demo-apps-parser:1.0
+        imagePullPolicy: Always
         livenessProbe:
           httpGet:
             path: /healthz

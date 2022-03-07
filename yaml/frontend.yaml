@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: bschmitt769/kubernetes-demo-apps-frontend:0.1
+        image: bschmitt769/kubernetes-demo-apps-frontend:1.0
         imagePullPolicy: Always
         resources:
           requests:
