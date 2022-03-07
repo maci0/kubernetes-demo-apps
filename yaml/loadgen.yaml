@@ -10,5 +10,5 @@ spec:
     name: loadgen
     command:
       - ./loadgen.sh
-      - "8081"
+      - "8888"
   restartPolicy: Always
