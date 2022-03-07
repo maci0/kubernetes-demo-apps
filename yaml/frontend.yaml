@@ -33,6 +33,7 @@ spec:
       containers:
       - name: frontend
         image: bschmitt769/kubernetes-demo-apps-frontend:0.1
+        imagePullPolicy: IfNotPresent
         resources:
           requests:
             cpu: 100m
