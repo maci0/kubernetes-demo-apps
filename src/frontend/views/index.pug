@@ -7,6 +7,7 @@ html
     h1= message
     div Last sent message:&nbsp;
       span(id='message-text') ...
+      <br />
     div
       form(action='/message', method='post')
         label(for='message') Message
@@ -15,7 +16,7 @@ html
         input(type='submit')
     script(type='text/javascript').
       var getLastMessage = function() {
-        $.get('/message', function(data) { 
+        $.get('/message', function(data) {
           $('#message-text').text(data);
         });
       }

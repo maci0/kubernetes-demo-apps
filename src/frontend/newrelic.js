@@ -9,11 +9,27 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: process.env.NEW_RELIC_APP_NAME,
+   app_name: process.env.NEW_RELIC_APP_NAME,
+   /**
+    * Your New Relic license key.
+    */
+   license_key: process.env.NEW_RELIC_LICENSE_KEY,
   /**
-   * Your New Relic license key.
+   * This setting controls distributed tracing.
+   * Distributed tracing lets you see the path that a request takes through your
+   * distributed system. Enabling distributed tracing changes the behavior of some
+   * New Relic features, so carefully consult the transition guide before you enable
+   * this feature: https://docs.newrelic.com/docs/transition-guide-distributed-tracing
+   * Default is false.
    */
-  license_key: process.env.NEW_RELIC_LICENSE_KEY,
+  distributed_tracing: {
+    /**
+     * Enables/disables distributed tracing.
+     *
+     * @env NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
+     */
+    enabled: true
+  },
   logging: {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
@@ -28,16 +44,6 @@ exports.config = {
    * attributes include/exclude lists.
    */
   allow_all_headers: true,
-
-  distributed_tracing: {
-    /**
-     * Enables/disables distributed tracing.
-     *
-     * @env NEW_RELIC_DISTRIBUTED_TRACING_ENABLED
-     */
-    enabled: true
-  },
-
   attributes: {
     /**
      * Prefix of attributes to exclude from all destinations. Allows * as wildcard
@@ -57,9 +63,7 @@ exports.config = {
       'response.headers.authorization',
       'response.headers.proxyAuthorization',
       'response.headers.setCookie*',
-      'response.headers.x*',
-      //exclude request.params.message for workshop
-      'request.parameters.message'
+      'response.headers.x*'
     ]
   }
 }
