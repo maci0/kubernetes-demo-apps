@@ -6,7 +6,7 @@ newrelic-infrastructure:
   #   env: sko-workshop
   # This is different in V3 - formerly integrations_config:
   integrations:
-    nri-rabbitmq-test:
+    nri-rabbitmq-workshop:
       # Run auto discovery to find pods with label "app=rabbitmq"
       # https://docs.newrelic.com/docs/integrations/host-integrations/installation/container-auto-discovery
       discovery:
