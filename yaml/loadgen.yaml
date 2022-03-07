@@ -7,6 +7,7 @@ metadata:
 spec:
   containers:
   - image: bschmitt769/kubernetes-demo-apps-loadgen:0.2
+    imagePullPolicy: Always
     name: loadgen
     command:
       - ./loadgen.sh
