@@ -59,7 +59,7 @@ spec:
           value: Workshop-Parser
           # tells the node.js app to pause at random intervals
         - name: LOOK_BUSY
-          value: t
+          value: f
         - name: GET_HOSTS_FROM
           value: dns
           # If your cluster config does not include a dns service, then to

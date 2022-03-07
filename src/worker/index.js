@@ -82,7 +82,7 @@ function notifyCatFacts() {
     if (fail) {
       options.path = '/fact?max_length=128';
       logger.info('Contacting 3rd-party... ' + options.host + options.path);
-      newrelic.noticeError('HTTP error when contacting https://' + options.host + options.path);
+      newrelic.noticeError('HTTP error when contacting https://' + options.host);
     } else {
       logger.info('Contacting 3rd-party... ' + options.host + options.path);
     }
