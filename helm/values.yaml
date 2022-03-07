@@ -2,8 +2,8 @@ newrelic-infrastructure:
   common:
     agentConfig:
       enable_process_metrics: true
-  customAttributes:
-    env: sko-workshop
+  # customAttributes:
+  #   env: sko-workshop
   # This is different in V3 - formerly integrations_config:
   integrations:
     nri-rabbitmq-test:
@@ -19,13 +19,13 @@ newrelic-infrastructure:
           # SKO Workshop Note: Since we're running in K3s, we must modify the port to 10250
           # https://rancher.com/docs/rancher/v2.5/en/installation/requirements/ports/#ports-for-rancher-server-nodes-on-k3s
           exec: /var/db/newrelic-infra/nri-discovery-kubernetes --port 10250 --tls
-          # match:
-          #   label.app: rabbitmq
+          match:
+            label.component: rabbitmq
       integrations:
         - name: nri-rabbitmq
           env:
             # using the discovered IP as the hostname address
-            # HOSTNAME: ${discovery.ip}
+            HOSTNAME: ${discovery.ip}
             PORT: 15672
             USERNAME: user
             PASSWORD: bitnami
@@ -34,18 +34,18 @@ newrelic-infrastructure:
             # get the node name. The node name has to match exactly with the one set in the env var RABBITMQ_NODE_NAME
             # inside the RabbitMQ pod. For instance in bitnami charts this is defined as
             # RABBITMQ_NODE_NAME=rabbit@$(MY_POD_NAME).$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local
-            NODE_NAME_OVERRIDE: rabbit@${discovery.podName}.rabbitmq-headless.${discovery.namespace}.svc.cluster.local
-            MANAGEMENT_PATH_PREFIX: <(Optional) rabbitmq management path prefix>
-            CA_BUNDLE_DIR: <(Optional) ca bundle directory>
-            CA_BUNDLE_FILE: <(Optional)ca bundle file>
-            CONFIG_PATH: <(Optional) /path/to/config/file/rabbitmq.conf>
-            USE_SSL: <(Optional) bool>
-            QUEUES: <(Optional) json array of queue names to collect>
-            QUEUES_REGEXES: <(Optional) json array of regexes, matching queue names will be collected>
-            EXCHANGES: <(Optional) json array of exchange names to collect>
-            EXCHANGES_REGEXES: <(Optional) json array of regexes, matching exchange names will be collected>
-            VHOSTS: <(Optional) json array of vhost names to collect>
-            VHOSTS_REGGEXES: <(Optional) json array of regexes, entities assigned to vhosts matching a regex will be collected>
+            # NODE_NAME_OVERRIDE: rabbit@${discovery.podName}.rabbitmq-headless.${discovery.namespace}.svc.cluster.local
+            # MANAGEMENT_PATH_PREFIX: <(Optional) rabbitmq management path prefix>
+            # CA_BUNDLE_DIR: <(Optional) ca bundle directory>
+            # CA_BUNDLE_FILE: <(Optional)ca bundle file>
+            # CONFIG_PATH: <(Optional) /path/to/config/file/rabbitmq.conf>
+            # USE_SSL: <(Optional) bool>
+            # QUEUES: <(Optional) json array of queue names to collect>
+            # QUEUES_REGEXES: <(Optional) json array of regexes, matching queue names will be collected>
+            # EXCHANGES: <(Optional) json array of exchange names to collect>
+            # EXCHANGES_REGEXES: <(Optional) json array of regexes, matching exchange names will be collected>
+            # VHOSTS: <(Optional) json array of vhost names to collect>
+            # VHOSTS_REGGEXES: <(Optional) json array of regexes, entities assigned to vhosts matching a regex will be collected>
           labels:
             env: sko-workshop
             role: rabbitmq
