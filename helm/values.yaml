@@ -1,13 +1,21 @@
+newrelic-logging:
+  fluentBit:
+    # This parameter enables the CRI log parser
+    criEnabled: true
 newrelic-infrastructure:
   common:
     agentConfig:
+      # SKO Workshop Note: This parameter enables process monitoring on the Kubernetes cluster nodes.
+      # It is disabled in some accounts by default.
+      # https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/configuration/infrastructure-agent-configuration-settings/#enable-process-metrics
       enable_process_metrics: true
-  # customAttributes:
-  #   env: sko-workshop
-  # This is different in V3 - formerly integrations_config:
+  customAttributes:
+    # SKO Workshop Note: Let's add a custom attribute to all events sent by the Infrastructure agent
+    env: sko-workshop
+  # SKO Workshop Note: This is slightly different in V3 - formerly integrations_config in V2
   integrations:
     nri-rabbitmq-workshop:
-      # Run auto discovery to find pods with label "app=rabbitmq"
+      # Run auto discovery to find pods with label "component=rabbitmq"
       # https://docs.newrelic.com/docs/integrations/host-integrations/installation/container-auto-discovery
       discovery:
         command:
@@ -29,23 +37,7 @@ newrelic-infrastructure:
             PORT: 15672
             USERNAME: user
             PASSWORD: bitnami
-            # NODE_NAME_OVERRIDE allows to generate the RabbitMQ Node entity.
-            # Setting this avoids the integration to run a local command (rabbitmqctl) in order to
-            # get the node name. The node name has to match exactly with the one set in the env var RABBITMQ_NODE_NAME
-            # inside the RabbitMQ pod. For instance in bitnami charts this is defined as
-            # RABBITMQ_NODE_NAME=rabbit@$(MY_POD_NAME).$(K8S_SERVICE_NAME).$(MY_POD_NAMESPACE).svc.cluster.local
-            # NODE_NAME_OVERRIDE: rabbit@${discovery.podName}.rabbitmq-headless.${discovery.namespace}.svc.cluster.local
-            # MANAGEMENT_PATH_PREFIX: <(Optional) rabbitmq management path prefix>
-            # CA_BUNDLE_DIR: <(Optional) ca bundle directory>
-            # CA_BUNDLE_FILE: <(Optional)ca bundle file>
-            # CONFIG_PATH: <(Optional) /path/to/config/file/rabbitmq.conf>
-            # USE_SSL: <(Optional) bool>
-            # QUEUES: <(Optional) json array of queue names to collect>
-            # QUEUES_REGEXES: <(Optional) json array of regexes, matching queue names will be collected>
-            # EXCHANGES: <(Optional) json array of exchange names to collect>
-            # EXCHANGES_REGEXES: <(Optional) json array of regexes, matching exchange names will be collected>
-            # VHOSTS: <(Optional) json array of vhost names to collect>
-            # VHOSTS_REGGEXES: <(Optional) json array of regexes, entities assigned to vhosts matching a regex will be collected>
+            QUEUES: '["messages"]'
           labels:
             env: sko-workshop
             role: rabbitmq
