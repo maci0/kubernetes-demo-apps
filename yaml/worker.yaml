@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: bschmitt769/kubernetes-demo-apps-worker:1.0
+        image: bschmitt769/kubernetes-demo-apps-worker:1.1
         imagePullPolicy: Always
         resources:
           requests:
