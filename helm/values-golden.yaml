@@ -1,13 +1,21 @@
 newrelic-logging:
   fluentBit:
-    # This parameter enables the CRI log parser
+    # This parameter enables the log parser to match containerd log patterns
     criEnabled: true
+nri-prometheus:
+  config:
+    transformations:
+      - description: "SKO Workshop Example"
+        ignore_metrics:
+          - prefixes:
+            - go_
 newrelic-infrastructure:
   common:
     agentConfig:
       # SKO Workshop Note: This parameter enables process monitoring on the Kubernetes cluster nodes.
       # It is disabled in some accounts by default.
       # https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/configuration/infrastructure-agent-configuration-settings/#enable-process-metrics
+      #
       enable_process_metrics: true
   customAttributes:
     # SKO Workshop Note: Let's add a custom attribute to all events sent by the Infrastructure agent
@@ -37,7 +45,6 @@ newrelic-infrastructure:
             PORT: 15672
             USERNAME: user
             PASSWORD: bitnami
-            QUEUES: '["messages"]'
+            QUEUES: '["message"]'
           labels:
-            env: sko-workshop
             role: rabbitmq

@@ -79,28 +79,48 @@ function notifyCatFacts() {
       method: 'GET'
     };
 
-    if (fail) {
-      options.path = '/fact?max_length=128';
-      logger.info('Contacting 3rd-party... ' + options.host + options.path);
-      newrelic.noticeError('HTTP error when contacting https://' + options.host);
-    } else {
-      logger.info('Contacting 3rd-party... ' + options.host + options.path);
-    }
+    // if (fail) {
+    //   options.path = '/fact?max_length=128';
+    //   logger.info('Contacting 3rd-party... ' + options.host + options.path);
+    //   newrelic.noticeError('HTTP error when contacting https://' + options.host + options.path);
+    // } else {
+    //   logger.info('Contacting 3rd-party... ' + options.host + options.path);
+    // }
 
     const request = https.request(options, (res) => {
-      res.on('data', (d) => {
-        logger.info('Cat Fact: ' + d)
-      })
-      res.on('end', function() {
-        if (res.statusCode >= 300) {
-          newrelic.noticeError('Error third-party, code: ' + res.statusCode);
-          logger.error('Error third-party, code: ' + res.statusCode);
-          reject('Error third-party, code: ' + res.statusCode);
-        } else {
-          logger.info('Third-party request successful, code: ' + res.statusCode);
-          resolve();
-        }
-      });
+      if (fail) {
+        newrelic.noticeError('The flux capacitor is broken, error code: 1.21 Gigawatts');
+        logger.error('The flux capacitor is broken, error code: 1.21 Gigawatts');
+        reject('The flux capacitor is broken, error code: 1.21 Gigawatts');
+        resolve();
+
+        // res.on('end', function() {
+        //   if (res.statusCode >= 300) {
+        //     newrelic.noticeError('Error third-party, code: ' + res.statusCode);
+        //     logger.error('Error third-party, code: ' + res.statusCode);
+        //     reject('Error third-party, code: ' + res.statusCode);
+        //   } else {
+        //     logger.info('Third-party request successful, code: ' + res.statusCode);
+        //     resolve();
+        //   }
+        // });
+
+      } else {
+
+        res.on('data', (d) => {
+          logger.info('Cat Fact: ' + d)
+        })
+        res.on('end', function() {
+          if (res.statusCode >= 300) {
+            newrelic.noticeError('Error third-party, code: ' + res.statusCode);
+            logger.error('Error third-party, code: ' + res.statusCode);
+            reject('Error third-party, code: ' + res.statusCode);
+          } else {
+            logger.info('Third-party request successful, code: ' + res.statusCode);
+            resolve();
+          }
+        });
+      }
     });
     request.on('error', (error) => {
       logger.error('GET Error', error);

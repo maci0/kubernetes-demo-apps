@@ -28,13 +28,12 @@ spec:
       role: primary
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "9121"
       labels:
         app: redis
         role: primary
         tier: backend
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9121"
     spec:
       containers:
       - name: primary
