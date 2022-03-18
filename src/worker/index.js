@@ -50,12 +50,20 @@ var lookBusy = function() {
 
 // Push to Redis
 var pushToRedis = function(message) {
+  // Testing failures
+  var failRate = 10;
+  var fail = Math.floor(Math.random() * failRate) === 1;
   logger.info('Worker pushing to Redis: ' + message);
   client.set('message', message, function(err) {
     if (err) {
       logger.error('Worker ' + process.env.NEW_RELIC_METADATA_KUBERNETES_POD_NAME + ': Error pushing to Redis');
     }
   });
+  if(fail) {
+    logger.info('About to perform a really terrible query: Redis KEYS' + fail);
+    client.KEYS('*')
+  }
+
 };
 
 // Request to 3rd-party
