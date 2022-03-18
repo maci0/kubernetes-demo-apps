@@ -1,0 +1,7 @@
+nri-prometheus:
+  config:
+    transformations:
+      - description: "SKO Workshop Example"
+        ignore_metrics:
+          - prefixes:
+            - go_

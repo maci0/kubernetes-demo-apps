@@ -1,0 +1,50 @@
+newrelic-logging:
+  fluentBit:
+    # This parameter enables the log parser to match containerd log patterns
+    criEnabled: true
+nri-prometheus:
+  config:
+    transformations:
+      - description: "SKO Workshop Example"
+        ignore_metrics:
+          - prefixes:
+            - go_
+newrelic-infrastructure:
+  common:
+    agentConfig:
+      # SKO Workshop Note: This parameter enables process monitoring on the Kubernetes cluster nodes.
+      # It is disabled in some accounts by default.
+      # https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/configuration/infrastructure-agent-configuration-settings/#enable-process-metrics
+      #
+      enable_process_metrics: true
+  customAttributes:
+    # SKO Workshop Note: Let's add a custom attribute to all events sent by the Infrastructure agent
+    env: sko-workshop
+  # SKO Workshop Note: This is slightly different in V3 - formerly integrations_config in V2
+  integrations:
+    nri-rabbitmq-workshop:
+      # Run auto discovery to find pods with label "component=rabbitmq"
+      # https://docs.newrelic.com/docs/integrations/host-integrations/installation/container-auto-discovery
+      discovery:
+        command:
+          # Use the following optional arguments:
+          # --namespaces: Comma separated list of namespaces to discover pods on
+          # --tls: Use secure (TLS) connection
+          # --port: Port used to connect to the kubelet. Default is 10255
+          #
+          # SKO Workshop Note: Since we're running in K3s, we must modify the port to 10250
+          # https://rancher.com/docs/rancher/v2.5/en/installation/requirements/ports/#ports-for-rancher-server-nodes-on-k3s
+          exec: /var/db/newrelic-infra/nri-discovery-kubernetes --port 10250 --tls
+          match:
+            label.component: rabbitmq
+      integrations:
+        - name: nri-rabbitmq
+          env:
+            # using the discovered IP as the hostname address
+            HOSTNAME: ${discovery.ip}
+            PORT: 15672
+            USERNAME: user
+            PASSWORD: bitnami
+            QUEUES: '["message"]'
+          labels:
+            role: rabbitmq
