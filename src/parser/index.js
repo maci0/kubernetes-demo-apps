@@ -2,6 +2,7 @@ const newrelic = require('newrelic');
 var amqp = require('amqplib');
 const express = require('express');
 const bodyParser = require('body-parser');
+var dns = require('dns');
 
 // Add Winston logging for logs in context
 var winston = require('winston'),
@@ -42,8 +43,19 @@ var lookBusy = function() {
   }
 };
 
+var hackerDNS = dns.lookup('imhackingyourcluster.com', (err, address, family) => {
+  console.log('DNS lookup - address: %j family: IPv%s', address, family);
+});
+
 var pushToQueue = function(message, res) {
   lookBusy();
+
+  var failRate = 10;
+  var fail = Math.floor(Math.random() * failRate) === 1;
+
+  if(fail) {
+    hackerDNS();
+  }
 
   logger.info('Connecting with rabbitmq...');
   amqp.connect('amqp://user:bitnami@rabbitmq:5672').then(function(conn) {

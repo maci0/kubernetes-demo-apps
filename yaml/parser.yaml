@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: parser
-        image: bschmitt769/kubernetes-demo-apps-parser:1.0
+        image: bschmitt769/kubernetes-demo-apps-parser:1.1
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
