@@ -19,6 +19,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis-primary
+  labels:
+    app: redis
+    role: primary
+    tier: backend
 spec:
   replicas: 1
   selector:
@@ -32,8 +36,6 @@ spec:
         app: redis
         role: primary
         tier: backend
-        # prometheus.io/scrape: "true"
-        # prometheus.io/port: "9121"
     spec:
       containers:
       - name: primary
