@@ -1,10 +1,15 @@
 newrelic-logging:
   fluentBit:
-    # This parameter enables the log parser to match containerd log patterns
+    # SKO Workshop Note:
+    # This parameter enables the log parser to match cri-o containerd log patterns
     criEnabled: true
 nri-prometheus:
   config:
     transformations:
+      # SKO Workshop Note:
+      # One or more transformations can be performed here.
+      # Options include: add_attributes, rename_attributes, copy_attributes, ignore_metrics
+      # https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-openmetrics/add-rename-or-copy-prometheus-attributes
       - description: "SKO Workshop Example"
         ignore_metrics:
           - prefixes:
@@ -12,18 +17,22 @@ nri-prometheus:
 newrelic-infrastructure:
   common:
     agentConfig:
-      # SKO Workshop Note: This parameter enables process monitoring on the Kubernetes cluster nodes.
+      # SKO Workshop Note:
+      # This parameter enables process monitoring on the Kubernetes cluster nodes.
       # It is disabled in some accounts by default.
       # https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/configuration/infrastructure-agent-configuration-settings/#enable-process-metrics
       #
       enable_process_metrics: true
   customAttributes:
-    # SKO Workshop Note: Let's add a custom attribute to all events sent by the Infrastructure agent
+    # SKO Workshop Note:
+    # Let's add a custom attribute to all events sent by the Infrastructure agent
     env: sko-workshop
-  # SKO Workshop Note: This is slightly different in V3 - formerly integrations_config in V2
+  # SKO Workshop Note:
+  # This is slightly different in V3 - formerly integrations_config in V2
   integrations:
     nri-rabbitmq-workshop:
-      # Run auto discovery to find pods with label "component=rabbitmq"
+      # SKO Workshop Note:
+      # Runs auto discovery to find pods with label "component=rabbitmq"
       # https://docs.newrelic.com/docs/integrations/host-integrations/installation/container-auto-discovery
       discovery:
         command:

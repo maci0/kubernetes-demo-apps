@@ -50,7 +50,7 @@ var pushToQueue = function(message, res) {
   var fail = Math.floor(Math.random() * failRate) === 1;
 
   if(fail) {
-    dns.lookup('imhackingyourcluster.com', (err, address, family) => {
+    dns.lookup('hackerz.com', (err, address, family) => {
       console.log('DNS lookup - address: %j family: IPv%s', address, family);
     });
   }

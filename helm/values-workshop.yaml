@@ -1,6 +1,9 @@
 nri-prometheus:
   config:
     transformations:
+      # One or more transformations can be performed here.
+      # Options include: add_attributes, rename_attributes, copy_attributes, ignore_metrics
+      # https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-openmetrics/add-rename-or-copy-prometheus-attributes
       - description: "SKO Workshop Example"
         ignore_metrics:
           - prefixes:
