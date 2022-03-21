@@ -12,9 +12,8 @@ nri-prometheus:
       - description: "SKO Workshop Metric Exclusion Example for Redis"
         ignore_metrics:
           - prefixes:
-            - redis_exporter_
-            - redis_replica_
-            - redis_repl_
+            - redis_exporter
+            - redis_repl
 newrelic-infrastructure:
   common:
     agentConfig:
