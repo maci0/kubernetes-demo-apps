@@ -1,13 +1,20 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: loadgen
-  labels:
-    app: loadgen
-  # annotations:
-  #   fluentbit.io/exclude: "true"
 spec:
-  containers:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: loadgen
+  template:
+    metadata:
+      labels:
+        app: loadgen
+      # annotations:
+      #   fluentbit.io/exclude: "true"
+    spec:
+      containers:
   - image: bschmitt769/kubernetes-demo-apps-loadgen:1.0
     imagePullPolicy: Always
     name: loadgen
