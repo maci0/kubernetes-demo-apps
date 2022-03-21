@@ -15,10 +15,10 @@ spec:
       #   fluentbit.io/exclude: "true"
     spec:
       containers:
-  - image: bschmitt769/kubernetes-demo-apps-loadgen:1.0
-    imagePullPolicy: Always
-    name: loadgen
-    command:
-      - ./loadgen.sh
-      - "8888"
-  restartPolicy: Always
+      - image: bschmitt769/kubernetes-demo-apps-loadgen:1.0
+        imagePullPolicy: Always
+        name: loadgen
+        command:
+          - ./loadgen.sh
+          - "8888"
+      restartPolicy: Always
