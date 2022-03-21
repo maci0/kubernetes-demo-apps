@@ -6,14 +6,15 @@ newrelic-logging:
 nri-prometheus:
   config:
     transformations:
-      # SKO Workshop Note:
       # One or more transformations can be performed here.
       # Options include: add_attributes, rename_attributes, copy_attributes, ignore_metrics
       # https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-openmetrics/add-rename-or-copy-prometheus-attributes
-      - description: "SKO Workshop Example"
+      - description: "SKO Workshop Metric Exclusion Example for Redis"
         ignore_metrics:
           - prefixes:
-            - go_
+            - redis_exporter_
+            - redis_replica_
+            - redis_repl_
 newrelic-infrastructure:
   common:
     agentConfig:
