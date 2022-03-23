@@ -9,6 +9,30 @@ nri-prometheus:
           - prefixes:
             - redis_exporter
             - redis_repl
+newrelic-logging:
+  fluentBit:
+    # SKO Workshop Note:
+    # This parameter enables the log parser to match cri-o containerd log patterns
+    # https://docs.fluentbit.io/manual/installation/kubernetes#container-runtime-interface-cri-parser
+    criEnabled: true
+    # SKO Workshop Note:
+    # Enables the ability to exclude pod logs with fluentbit.io/exlude: "true" annotations
+    k8sLoggingExclude: "On"
+    config:
+      filters: |
+        [FILTER]
+            Name                kubernetes
+            Match               kube.*
+            # We need the full DNS suffix as Windows only supports resolving names with this suffix
+            # See: https://kubernetes.io/docs/setup/production-environment/windows/intro-windows-in-kubernetes/#dns-limitations
+            Kube_URL            https://kubernetes.default.svc.cluster.local:443
+            Buffer_Size         ${K8S_BUFFER_SIZE}
+            K8S-Logging.Exclude ${K8S_LOGGING_EXCLUDE}
+
+        [FILTER]
+            Name           record_modifier
+            Match          *
+            Record         cluster_name ${CLUSTER_NAME}
 newrelic-infrastructure:
   common:
     agentConfig:
