@@ -60,7 +60,7 @@ var pushToRedis = function(message) {
     }
   });
   if(fail) {
-    logger.info('About to perform a really terrible query: Redis KEYS' + fail);
+    logger.info('About to perform a really terrible query: Redis KEYS');
     client.KEYS('*')
   }
 
@@ -116,7 +116,8 @@ function notifyCatFacts() {
       } else {
 
         res.on('data', (d) => {
-          logger.info('Cat Fact: ' + d)
+          const catFact = JSON.parse(d);
+          logger.info('Cat Fact: ' + catFact.fact)
         })
         res.on('end', function() {
           if (res.statusCode >= 300) {

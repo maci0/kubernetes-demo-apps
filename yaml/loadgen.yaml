@@ -11,8 +11,8 @@ spec:
     metadata:
       labels:
         app: loadgen
-      # annotations:
-      #   fluentbit.io/exclude: "true"
+      annotations:
+        fluentbit.io/exclude: "false"
     spec:
       containers:
       - image: bschmitt769/kubernetes-demo-apps-loadgen:1.0
