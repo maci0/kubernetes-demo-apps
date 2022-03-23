@@ -28,7 +28,6 @@ newrelic-logging:
             Name    grep
             Match   *
             Exclude $kubernetes['namespace_name'] newrelic
-            Exclude $kubernetes['container_name'] loadgen
 nri-prometheus:
   config:
     transformations:
