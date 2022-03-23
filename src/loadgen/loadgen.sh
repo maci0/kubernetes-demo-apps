@@ -8,7 +8,7 @@ while true; do
     do
         MESSAGE=$(fortune | tr -d '\n')
         echo "Load generator: posting to $HOST message: $MESSAGE"
-        curl -s --data-urlencode "message=$MESSAGE" -X POST http://$HOST:$PORT/message --max-time 10
+        curl -L -s --data-urlencode "message=$MESSAGE" -X POST http://$HOST:$PORT/message --max-time 10
         sleep $(( ( RANDOM % 10 )  + 1 ))
     done
 done

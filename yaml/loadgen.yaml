@@ -15,7 +15,7 @@ spec:
         fluentbit.io/exclude: "false"
     spec:
       containers:
-      - image: bschmitt769/kubernetes-demo-apps-loadgen:1.0
+      - image: bschmitt769/kubernetes-demo-apps-loadgen:1.1
         imagePullPolicy: Always
         name: loadgen
         command:
