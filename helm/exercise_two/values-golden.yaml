@@ -1,3 +1,5 @@
+global:
+  lowDataMode: false
 newrelic-logging:
   fluentBit:
     # SKO Workshop Note:
@@ -5,7 +7,8 @@ newrelic-logging:
     # https://docs.fluentbit.io/manual/installation/kubernetes#container-runtime-interface-cri-parser
     criEnabled: true
     # SKO Workshop Note:
-    # Enables the ability to exclude pod logs with fluentbit.io/exlude: "true" annotations
+    # Enables the ability to exclude pod logs with fluentbit.io/exlude: "true" annotations.
+    # Populates the environment variable K8S_LOGGING_EXCLUDE in line 22
     k8sLoggingExclude: "On"
     config:
       filters: |
