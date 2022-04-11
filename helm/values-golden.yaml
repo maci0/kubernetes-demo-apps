@@ -1,3 +1,5 @@
+global:
+  lowDataMode: false
 newrelic-logging:
   fluentBit:
     # SKO Workshop Note:
