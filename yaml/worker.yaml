@@ -44,6 +44,8 @@ spec:
             cpu: 150m
             memory: 200Mi
         env:
+        - name: NEW_RELIC_LABELS
+          value: "environment:production;cloud-provider:AWS"
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:

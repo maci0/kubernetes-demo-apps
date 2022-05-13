@@ -21,7 +21,7 @@ metadata:
     app: guestbook
     tier: parser
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: guestbook
@@ -69,3 +69,13 @@ spec:
           # value: env
         ports:
           - containerPort: 3000
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - "parser"
+            topologyKey: kubernetes.io/hostname
