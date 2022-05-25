@@ -45,14 +45,14 @@ spec:
             memory: 200Mi
         env:
         - name: NEW_RELIC_LABELS
-          value: "environment:production;cloud-provider:AWS"
+          value: "futurestack:worker"
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               name: newrelic-license-key
               key: license
         - name: NEW_RELIC_APP_NAME
-          value: Workshop-Worker
+          value: Worker
         - name: GET_HOSTS_FROM
           value: dns
           # If your cluster config does not include a dns service, then to

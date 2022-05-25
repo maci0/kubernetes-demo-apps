@@ -19,7 +19,7 @@ kind: Deployment
 metadata:
   name: frontend
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: guestbook
@@ -46,17 +46,19 @@ spec:
            path: /healthz
            port: 3000
          initialDelaySeconds: 30
-         periodSeconds: 10
-         timeoutSeconds: 3
+         periodSeconds: 30
+         timeoutSeconds: 5
          failureThreshold: 3
         env:
+        - name: NEW_RELIC_LABELS
+          value: "futurestack:frontend"
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               name: newrelic-license-key
               key: license
         - name: NEW_RELIC_APP_NAME
-          value: Workshop-Frontend
+          value: Frontend
           # tells the node.js app to pause at random intervals
         - name: LOOK_BUSY
           value: f
@@ -72,3 +74,13 @@ spec:
           # value: env
         ports:
           - containerPort: 3000
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - "frontend"
+            topologyKey: kubernetes.io/hostname

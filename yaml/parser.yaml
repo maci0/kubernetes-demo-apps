@@ -21,7 +21,7 @@ metadata:
     app: guestbook
     tier: parser
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: guestbook
@@ -41,7 +41,8 @@ spec:
             path: /healthz
             port: 3000
           initialDelaySeconds: 30
-          periodSeconds: 5
+          failureThreshold: 3
+          periodSeconds: 30
         resources:
           requests:
             cpu: 50m
@@ -50,13 +51,15 @@ spec:
             cpu: 100m
             memory: 200Mi
         env:
+        - name: NEW_RELIC_LABELS
+          value: "futurestack:parser"
         - name: NEW_RELIC_LICENSE_KEY
           valueFrom:
             secretKeyRef:
               name: newrelic-license-key
               key: license
         - name: NEW_RELIC_APP_NAME
-          value: Workshop-Parser
+          value: Parser
           # tells the node.js app to pause at random intervals
         - name: LOOK_BUSY
           value: f
@@ -69,13 +72,3 @@ spec:
           # value: env
         ports:
           - containerPort: 3000
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: tier
-                operator: In
-                values:
-                - "parser"
-            topologyKey: kubernetes.io/hostname
