@@ -1,5 +1,5 @@
 global:
-  lowDataMode: false
+  lowDataMode: true
 newrelic-logging:
   fluentBit:
     # SKO Workshop Note:
@@ -30,7 +30,9 @@ newrelic-logging:
         [FILTER]
             Name    grep
             Match   *
-            Exclude $kubernetes['namespace_name'] newrelic
+            Exclude $kubernetes['pod_name'] frontend.*
+            Exclude $kubernetes['namespace_name'] px-operator
+
 nri-prometheus:
   config:
     transformations:

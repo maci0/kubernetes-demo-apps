@@ -1,5 +1,5 @@
 global:
-  lowDataMode: false
+  lowDataMode: true
 nri-prometheus:
   config:
     transformations:
