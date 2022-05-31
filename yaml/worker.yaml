@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: bschmitt769/kubernetes-demo-apps-worker:1.1
+        image: bschmitt769/kubernetes-demo-apps-worker:1.2
         imagePullPolicy: Always
         resources:
           requests:
@@ -51,6 +51,10 @@ spec:
               key: license
         - name: NEW_RELIC_APP_NAME
           value: Workshop-Worker
+        - name: NEW_RELIC_APPLICATION_LOGGING_LOCAL_DECORATING_ENABLED
+          value: "true"
+        - name: NEW_RELIC_APPLICATION_LOGGING_FORWARDING_ENABLED
+          value: "false"
         - name: GET_HOSTS_FROM
           value: dns
           # If your cluster config does not include a dns service, then to

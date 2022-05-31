@@ -7,7 +7,7 @@ const dns = require('dns');
 // Add Winston logging for logs in context
 var winston = require('winston'),
     expressWinston = require('express-winston');
-const newrelicFormatter = require('@newrelic/winston-enricher')
+//const newrelicFormatter = require('@newrelic/winston-enricher')
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,7 +20,7 @@ app.use(expressWinston.logger({
   ],
   format: winston.format.combine(
     winston.format.json(),
-    newrelicFormatter()
+    //newrelicFormatter()
   ),
   expressFormat: true,
   colorize: true
@@ -31,7 +31,7 @@ const logger = winston.createLogger({
   ],
   format: winston.format.combine(
     winston.format.json(),
-    newrelicFormatter()
+    //newrelicFormatter()
   ),
 });
 

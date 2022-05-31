@@ -11,7 +11,7 @@ COPY package.json .
 RUN npm install
 
 COPY index.js .
-COPY newrelic.js .
+#COPY newrelic.js .
 
 EXPOSE 3000
 
