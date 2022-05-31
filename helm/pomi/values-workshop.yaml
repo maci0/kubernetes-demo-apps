@@ -4,7 +4,7 @@ nri-prometheus:
       # One or more transformations can be performed here.
       # Options include: add_attributes, rename_attributes, copy_attributes, ignore_metrics
       # https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-openmetrics/add-rename-or-copy-prometheus-attributes
-      - description: "SKO Workshop Metric Exclusion Example for Redis"
+      - description: "Instruqt Metric Exclusion Example for Redis"
         ignore_metrics:
           - prefixes:
             - redis_exporter

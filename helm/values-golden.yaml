@@ -1,13 +1,25 @@
 global:
   lowDataMode: false
+nri-prometheus:
+  config:
+    transformations:
+      # One or more transformations can be performed here.
+      # Options include: add_attributes, rename_attributes, copy_attributes, ignore_metrics
+      # https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-openmetrics/add-rename-or-copy-prometheus-attributes
+      - description: "Instruqt Metric Exclusion Example for Redis"
+        ignore_metrics:
+          - prefixes:
+            - redis_exporter
+            - redis_repl
 newrelic-logging:
   fluentBit:
-    # SKO Workshop Note:
+    # Note:
     # This parameter enables the log parser to match cri-o containerd log patterns
     # https://docs.fluentbit.io/manual/installation/kubernetes#container-runtime-interface-cri-parser
     criEnabled: true
-    # SKO Workshop Note:
+    # Note:
     # Enables the ability to exclude pod logs with fluentbit.io/exlude: "true" annotations
+    # Only works when lowDataMode: false
     k8sLoggingExclude: "On"
     config:
       filters: |
@@ -19,29 +31,11 @@ newrelic-logging:
             Kube_URL            https://kubernetes.default.svc.cluster.local:443
             Buffer_Size         ${K8S_BUFFER_SIZE}
             K8S-Logging.Exclude ${K8S_LOGGING_EXCLUDE}
-            K8S-Logging.Parser On
 
         [FILTER]
             Name           record_modifier
             Match          *
             Record         cluster_name ${CLUSTER_NAME}
-
-        [FILTER]
-            Name    grep
-            Match   *
-            Exclude $kubernetes['namespace_name'] newrelic
-            Exclude $kubernetes['container_name'] loadgen
-nri-prometheus:
-  config:
-    transformations:
-      # One or more transformations can be performed here.
-      # Options include: add_attributes, rename_attributes, copy_attributes, ignore_metrics
-      # https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-openmetrics/add-rename-or-copy-prometheus-attributes
-      - description: "SKO Workshop Metric Exclusion Example for Redis"
-        ignore_metrics:
-          - prefixes:
-            - redis_exporter
-            - redis_repl
 newrelic-infrastructure:
   common:
     agentConfig:
@@ -54,7 +48,7 @@ newrelic-infrastructure:
   customAttributes:
     # SKO Workshop Note:
     # Let's add a custom attribute to all events sent by the Infrastructure agent
-    env: sko-workshop
+    env: instruqt
   # SKO Workshop Note:
   # This is slightly different in V3 - formerly integrations_config in V2
   integrations:
