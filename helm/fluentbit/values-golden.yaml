@@ -2,11 +2,11 @@ global:
   lowDataMode: true
 newrelic-logging:
   fluentBit:
-    # SKO Workshop Note:
+    # Note:
     # This parameter enables the log parser to match cri-o containerd log patterns
     # https://docs.fluentbit.io/manual/installation/kubernetes#container-runtime-interface-cri-parser
     criEnabled: true
-    # SKO Workshop Note:
+    # Note:
     # Enables the ability to exclude pod logs with fluentbit.io/exlude: "true" annotations.
     # Populates the environment variable K8S_LOGGING_EXCLUDE in line 22
     k8sLoggingExclude: "On"
@@ -39,7 +39,7 @@ nri-prometheus:
       # One or more transformations can be performed here.
       # Options include: add_attributes, rename_attributes, copy_attributes, ignore_metrics
       # https://docs.newrelic.com/docs/infrastructure/prometheus-integrations/install-configure-openmetrics/add-rename-or-copy-prometheus-attributes
-      - description: "SKO Workshop Metric Exclusion Example for Redis"
+      - description: "Instruqt Metric Exclusion Example for Redis"
         ignore_metrics:
           - prefixes:
             - redis_exporter
@@ -47,21 +47,21 @@ nri-prometheus:
 newrelic-infrastructure:
   common:
     agentConfig:
-      # SKO Workshop Note:
+      # Note:
       # This parameter enables process monitoring on the Kubernetes cluster nodes.
       # It is disabled in some accounts by default.
       # https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/configuration/infrastructure-agent-configuration-settings/#enable-process-metrics
       #
       enable_process_metrics: true
   customAttributes:
-    # SKO Workshop Note:
+    # Note:
     # Let's add a custom attribute to all events sent by the Infrastructure agent
-    env: sko-workshop
-  # SKO Workshop Note:
+    env: instruqt
+  # Note:
   # This is slightly different in V3 - formerly integrations_config in V2
   integrations:
     nri-rabbitmq-workshop:
-      # SKO Workshop Note:
+      # Note:
       # Runs auto discovery to find pods with label "component=rabbitmq"
       # https://docs.newrelic.com/docs/integrations/host-integrations/installation/container-auto-discovery
       discovery:
@@ -71,7 +71,7 @@ newrelic-infrastructure:
           # --tls: Use secure (TLS) connection
           # --port: Port used to connect to the kubelet. Default is 10255
           #
-          # SKO Workshop Note: Since we're running in K3s, we must modify the port to 10250
+          # Note: Since we're running in K3s, we must modify the port to 10250
           # https://rancher.com/docs/rancher/v2.5/en/installation/requirements/ports/#ports-for-rancher-server-nodes-on-k3s
           exec: /var/db/newrelic-infra/nri-discovery-kubernetes --port 10250 --tls
           match:
