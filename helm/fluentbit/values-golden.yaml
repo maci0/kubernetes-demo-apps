@@ -28,10 +28,10 @@ newrelic-logging:
             Record         cluster_name ${CLUSTER_NAME}
 
         [FILTER]
-            Name    grep
-            Match   *
-            Exclude $kubernetes['pod_name'] frontend.*
-            Exclude $kubernetes['namespace_name'] px-operator
+            Name          grep
+            Match         *
+            Exclude       namespace_name newrelic
+            Exclude       pod_name frontend.*
 
 nri-prometheus:
   config:
