@@ -11,7 +11,7 @@ newrelic-logging:
     # Populates the environment variable K8S_LOGGING_EXCLUDE in line 22
     k8sLoggingExclude: "On"
     config:
-      filters: |
+      lowDataModeFilters: |
         [FILTER]
             Name                kubernetes
             Match               kube.*
