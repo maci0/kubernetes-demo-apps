@@ -44,7 +44,7 @@ newrelic-logging:
             Name          grep
             Match         *
             Exclude       namespace_name newrelic
-            Exclude       pod_name frontend.*
+            Exclude       pod_name worker.*
 
 nri-prometheus:
   config:
