@@ -120,14 +120,13 @@ app.post('/message', function(req, res) {
 });
 
 app.get('/healthz', function (req, res) {
-  const transactionHandle = newrelic.getTransaction();
-  transactionHandle.ignore();
+  // const transactionHandle = newrelic.getTransaction();
+  // transactionHandle.ignore();
   // Fail 1 out of 10 requests
   var failRate = 10;
   var fail = Math.floor(Math.random() * failRate) === 1;
   if (fail) {
-    logger.error('Error - Unsupported User-Agent: Mozilla/4.0 (compatible; Windows NT 5.1; U; en)');
-    newrelic.noticeError('Error - Unsupported User-Agent: Mozilla/4.0 (compatible; Windows NT 5.1; U; en)');
+    logger.error('Failed health check');
     res.status(500).send('FAILED');
   } else {
     res.status(200).send('OK');
