@@ -127,7 +127,7 @@ app.get('/healthz', function (req, res) {
   var fail = Math.floor(Math.random() * failRate) === 1;
   if (fail) {
     logger.error('Error - Unsupported User-Agent: Mozilla/4.0 (compatible; Windows NT 5.1; U; en)');
-    nr.noticeError('Error - Unsupported User-Agent: Mozilla/4.0 (compatible; Windows NT 5.1; U; en)');
+    newrelic.noticeError('Error - Unsupported User-Agent: Mozilla/4.0 (compatible; Windows NT 5.1; U; en)');
     res.status(500).send('FAILED');
   } else {
     res.status(200).send('OK');
