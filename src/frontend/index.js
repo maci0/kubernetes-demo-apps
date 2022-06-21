@@ -126,8 +126,8 @@ app.get('/healthz', function (req, res) {
   var failRate = 10;
   var fail = Math.floor(Math.random() * failRate) === 1;
   if (fail) {
-    logger.error('Failed health check');
     res.status(500).send('FAILED');
+    logger.error('HTTP 500 - Failed health check');
   } else {
     res.status(200).send('OK');
   }
