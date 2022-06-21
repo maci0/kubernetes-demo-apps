@@ -50,9 +50,29 @@ var pushToQueue = function(message, res) {
   var fail = Math.floor(Math.random() * failRate) === 1;
 
   if(fail) {
+    // Fake DNS lookup
     dns.lookup('hackerz.com', (err, address, family) => {
       console.log('DNS lookup - address: %j family: IPv%s', address, family);
     });
+
+    const options = {
+      hostname: 'worker',
+      port: 80,
+      path: '/oops',
+      method: 'GET'
+    }
+
+    //logger.info('Forwarding to parser service');
+    const request = http.request(options, (res) => {
+      res.on('data', (d) => {
+        logger.info('Call dispatched to worker', d);
+      })
+    });
+    request.on('error', (error) => {
+      logger.error('GET Error', error);
+    })
+    request.end()
+
   }
 
   logger.info('Connecting with rabbitmq...');

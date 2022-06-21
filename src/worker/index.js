@@ -66,6 +66,11 @@ var pushToRedis = function(message) {
 
 };
 
+app.get('/oops', function (req, res) {
+    res.status(400).send('BAD REQUEST');
+    logger.error('HTTP 400 - Bad Request');
+});
+
 // Request to 3rd-party
 async function notifyThirdParty() {
   try {
