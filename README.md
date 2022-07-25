@@ -8,9 +8,11 @@ The repo contains a set of applications for Kubernetes that simulate a working p
 
 1) You need a New Relic account and license key. You can create one on https://newrelic.com/signup
 
-2) Deploy a Kubernetes secret with your New Relic license key: `kubectl create secret generic newrelic-bundle-newrelic-infrastructure-config --from-literal=license='[[NEW RELIC LICENSE KEY]]'`
+2) Create a namespace: `kubectl create ns demo`
 
-3) Deploy the applications on a Kubernetes cluster with `kubectl apply -f yaml/`
+3) Deploy a Kubernetes secret with your New Relic license key: `kubectl create secret generic newrelic-license-key -n demo --from-literal=license=<YOUR KEY>`
+
+4) Deploy the applications on a Kubernetes cluster with `kubectl apply -f ./yaml -n demo`
 
 ## Support
 
