@@ -58,8 +58,6 @@ spec:
               key: license
         - name: NEW_RELIC_APP_NAME
           value: Workshop-Parser
-        - name: NEW_RELIC_APP_NAME
-          value: Workshop-Parser
         - name: NEW_RELIC_APPLICATION_LOGGING_LOCAL_DECORATING_ENABLED
           value: "true"
         - name: NEW_RELIC_APPLICATION_LOGGING_FORWARDING_ENABLED
